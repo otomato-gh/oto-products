@@ -1,9 +1,9 @@
 version: '1.0'
 steps:
   CheckKubectl:
-    title: CheckKubectl
+    title: deploy-to-k8s
     image: codefresh/k8s-kubectl
     commands:
-      - sed -i -- \'s/BUILD_NUMBER/${{BUILD_NUMBER}}/g\' products-dep.yml"
+      - sed -i -- "s/BUILD_NUMBER/${{BUILD_NUMBER}}/g" products-dep.yml
       - kubectl config use-context cf-staging@codefresh-staging
-      - kubectl apply -f products-dep.yml
+      - kubectl apply -f products-dep.yml -n otom8
