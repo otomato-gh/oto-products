@@ -1,15 +1,9 @@
-version: '1.0'
 steps:
-  build-the-image:
-    type: build
-    description: Builds my service
-    image_name: antweiss/otoproducts
-    tag: ${{CF_SHORT_REVISION}}
-  push-the-image:
-    type: push
-    candidate: ${{build-the-image}}
-    tag: ${{CF_SHORT_REVISION}}
-  push-with-branch-name:
-    type: push
-    candidate: ${{build-the-image}}
-    tag: ${{CF_BRANCH}}
+  CheckKubectl:
+    title: CheckKubectl
+    image: codefresh/k8s-kubectl
+    commands:
+      - sed -i -- \'s/BUILD_NUMBER/${{BUILD_NUMBER}}/g\' products-dep.yml"
+      - kubectl config use-context cf-staging@codefresh-staging
+      - kubectl apply -f products-dep.yml
+ 
