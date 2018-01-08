@@ -20,6 +20,9 @@ app.config['SWAGGER_INFO'] = {
     }
 }
 
+@app.route('/healthz')
+def hello_world():
+    return 'Healthy'
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')
