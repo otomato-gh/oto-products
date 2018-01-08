@@ -7,7 +7,7 @@ app.register_blueprint(swagger)
 # required. See http://swagger.io/specification/#infoObject for details.
 app.config['SWAGGER_INFO'] = {
     'title': 'Otomato Products API',
-    'version': '1.1',
+    'version': '1.2',
     'description': 'store and retrieve products',
     'termsOfService': 'my terms of service',
     'contact': {
