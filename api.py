@@ -21,8 +21,12 @@ app.config['SWAGGER_INFO'] = {
 }
 
 @app.route('/healthz')
-def hello_world():
+def healthz():
     return 'Healthy'
+
+@app.route('/version')
+def version():
+    return app.config['SWAGGER_INFO']['version']
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')
