@@ -1,5 +1,7 @@
+import time
 from eve import Eve
 from eve_swagger import swagger, add_documentation
+from flask_prometheus import monitor
 
 app = Eve()
 app.register_blueprint(swagger)
@@ -28,5 +30,15 @@ def healthz():
 def version():
     return app.config['SWAGGER_INFO']['version']
 
+@app.route('/ping')
+def ping():
+    if not hasattr(ping, "latency"):
+        ping.latency = 10
+    time.sleep(ping.latency)
+    if ping.latency > 0:
+        ping.latency -= 1
+    return 'Pong ' + str(ping.latency)
+
 if __name__ == '__main__':
+	monitor(app, port=8000)
 	app.run(host='0.0.0.0')
