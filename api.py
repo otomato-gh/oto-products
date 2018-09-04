@@ -1,8 +1,10 @@
 from eve import Eve
+from flask import Response
 from eve_swagger import swagger, add_documentation
-
+import random
 app = Eve()
 app.register_blueprint(swagger)
+count = 0
 
 # required. See http://swagger.io/specification/#infoObject for details.
 app.config['SWAGGER_INFO'] = {
@@ -19,15 +21,19 @@ app.config['SWAGGER_INFO'] = {
         'url': 'https://github.com/antweiss/oto-products/blob/master/LICENSE',
     }
 }
+@app.route('/hello')
+def hello():
+  return 'hi man!'
 
 @app.route('/metrics')
 def metrics():
   global count
   count+=1
+  print ("in metrics")
   metrics = "random " + str(random.randint(1, 10))
   metrics += "\nhttp_requests_total " + str(count)
   metrics += "\noto_products_errors " + str(random.randint(1, 10))
-  return Response(metrics, mimetype='text/plain')
+  return metrics
 
 
 if __name__ == '__main__':
