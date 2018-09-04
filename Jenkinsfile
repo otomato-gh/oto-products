@@ -1,6 +1,6 @@
+def svcName = 'products'
+def nsName = "${svcName}-testing-${env.BUILD_NUMBER}"
 node('slave1'){
-  def svcName = 'products'
-  def nsName = "${svcName}-testing-${env.BUILD_NUMBER}"
   stage ('git'){
      checkout scm
   }
