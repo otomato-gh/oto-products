@@ -10,9 +10,13 @@ node('slave1'){
   }
     
   stage ('push'){
-      image.push()
+      docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
+	  image.push()
+      }
   }
   def APP_URL=''
+} //end node
+node ('slave-kc'){
   stage ('deploy-to-testing'){
         sh "sed -i -- \'s/BUILD_NUMBER/${env.BUILD_NUMBER}/g\' ${svcName}-dep.yml"
         sh "kubectl create namespace ${nsName}"
@@ -37,7 +41,7 @@ node('slave1'){
     stage ('clean-up'){
 	sh "kubectl delete ns ${nsName}"
     }
-    stage('deply-to-staging'){
+    stage('deploy-to-staging'){
 	sh "kubectl apply -f ${svcName}-dep.yml -n staging"  
     }
     stage ('integration-test'){
