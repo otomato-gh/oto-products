@@ -1,4 +1,4 @@
-FROM python:onbuild
+FROM python:alpine
 MAINTAINER Anton Weiss <ant.weiss@gmail.com>
 ADD . /usr/src/app
 WORKDIR /usr/src/app
