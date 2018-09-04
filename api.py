@@ -20,6 +20,15 @@ app.config['SWAGGER_INFO'] = {
     }
 }
 
+@app.route('/metrics')
+def metrics():
+  global count
+  count+=1
+  metrics = "random " + str(random.randint(1, 10))
+  metrics += "\nhttp_requests_total " + str(count)
+  metrics += "\noto_products_errors " + str(random.randint(1, 10))
+  return Response(metrics, mimetype='text/plain')
+
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')
